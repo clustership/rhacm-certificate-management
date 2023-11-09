@@ -1,0 +1,125 @@
+apiVersion: apps.open-cluster-management.io/v1
+kind: PlacementRule
+metadata:
+  name: placement-policy-default-ingress-certificate-config
+  namespace: common-policies
+spec:
+  clusterSelector:
+    matchLabels:
+      vendor: OpenShift
+---
+apiVersion: policy.open-cluster-management.io/v1
+kind: PlacementBinding
+metadata:
+  name: binding-policy-default-ingress-certificate-config
+  namespace: common-policies
+placementRef:
+  apiGroup: apps.open-cluster-management.io
+  kind: PlacementRule
+  name: placement-policy-default-ingress-certificate-config
+subjects:
+- apiGroup: policy.open-cluster-management.io
+  kind: Policy
+  name: policy-default-ingress-certificate-config
+---
+apiVersion: policy.open-cluster-management.io/v1
+kind: Policy
+metadata:
+  annotations:
+    policy.open-cluster-management.io/categories: CM Configuration Management
+    policy.open-cluster-management.io/controls: CM-2 Baseline Configuration
+    policy.open-cluster-management.io/standards: NIST SP 800-53
+  name: policy-default-ingress-certificate-config
+  namespace: common-policies
+spec:
+  disabled: false
+  policy-templates:
+  - objectDefinition:
+      apiVersion: policy.open-cluster-management.io/v1
+      kind: ConfigurationPolicy
+      metadata:
+        name: policy-default-ingress-certificate-config
+      spec:
+        object-templates:
+        - complianceType: musthave
+          objectDefinition:
+            apiVersion: cert-manager.io/v1
+            kind: Issuer
+            metadata:
+              name: digitalocean-cluster-issuer-prod
+              namespace: openshift-ingress
+            spec:
+              acme:
+                email: bob@example.com # put your email here
+                preferredChain: ""
+                privateKeySecretRef:
+                  name: cert-manager-letsencrypt-tls-key
+                server: https://acme-v02.api.letsencrypt.org/directory
+                solvers:
+                - dns01:
+                    cnameStrategy: Follow
+                    digitalocean:
+                      tokenSecretRef:
+                        key: access-token
+                        name: digitalocean-dns-token
+        - complianceType: musthave
+          objectDefinition:
+            apiVersion: cert-manager.io/v1
+            kind: Issuer
+            metadata:
+              name: digitalocean-cluster-issuer-staging
+              namespace: openshift-ingress
+            spec:
+              acme:
+                email: bob@example.com # put your email here
+                preferredChain: ""
+                privateKeySecretRef:
+                  name: cert-manager-letsencrypt-tls-key-staging
+                server: https://acme-staging-v02.api.letsencrypt.org/directory
+                solvers:
+                - dns01:
+                    cnameStrategy: Follow
+                    digitalocean:
+                      tokenSecretRef:
+                        key: access-token
+                        name: digitalocean-dns-token
+        - complianceType: musthave
+          objectDefinition:
+            apiVersion: v1
+            data:
+              access-token: Ym9ibGVwb25nZQo=
+            kind: Secret
+            metadata:
+              creationTimestamp: null
+              name: digitalocean-dns-token
+              namespace: openshift-ingress
+        - complianceType: musthave
+          objectDefinition:
+            apiVersion: cert-manager.io/v1
+            kind: Certificate
+            metadata:
+              name: openshift-wildcard
+              namespace: openshift-ingress
+            spec:
+              commonName: '*.{{ (lookup "operator.openshift.io/v1" "IngressController"
+                "openshift-ingress-operator" "default").status.domain }}'
+              dnsNames:
+              - '*.{{ (lookup "operator.openshift.io/v1" "IngressController" "openshift-ingress-operator"
+                "default").status.domain }}'
+              issuerRef:
+                kind: Issuer
+                name: digitalocean-cluster-issuer-prod
+              secretName: openshift-wildcard-cert
+        - complianceType: musthave
+          objectDefinition:
+            apiVersion: operator.openshift.io/v1
+            kind: IngressController
+            metadata:
+              name: default
+              namespace: openshift-ingress-operator
+            spec:
+              defaultCertificate:
+                name: openshift-wildcard-cert
+        remediationAction: enforce
+        severity: medium
+  remediationAction: enforce
