@@ -10,7 +10,9 @@ This is not a Red Hat supported solution. This document just provides an example
 
 ### Tools used
 
-This example is based on the certified cert-manager operator deployed in managed OpenShift clusters. But I use an unsupported issuer (letsencrypt-digitalocean) to generate certificate using Letsencrypt public PKI with the alias challenge verification method using DNS TXT records generated using digitalocean API.
+This example is based on the certified cert-manager operator deployed in managed OpenShift clusters. But, for demo purpose, I use an unsupported cert-manager ClusterIssuer ([https://github.com/wikimedia/operations-software-cfssl-issuer|cfssl-issuer]) to generate certificate using multirootca ca server from cfssl project.
+
+Setting up multirootca is out of the scope of this project.
 
 ## Cert-manager installation and configuration (issuer and clusterissuer)
 
@@ -29,20 +31,7 @@ that match specific PlacementRule (based on cluster labels).
 As CertificateRequest are distinguished based on a domain (or cn) attribute unique to each cluster, we use a policy placeholder and RHACM lookup function to identify
 this unique value for each managed cluster.
 
-### PlacementRule definition
 
-
-```bash
-cat << EOF-
-
-EOF
-
-Use PolicyGenerator kustomize plugin (https://github.com/stolostron/policy-generator-plugin/tree/main)
-
-Generate policy with:
-
-```
-kustomize build --enable-alpha-plugins . > ../policy-users-and-roles.yaml
-```
+See cert-manager-policygentemplates/ folder.
 
 
