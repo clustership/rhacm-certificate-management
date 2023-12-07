@@ -1,0 +1,10 @@
+apiVersion: cfssl-issuer.wikimedia.org/v1alpha1
+kind: ClusterIssuer
+metadata:
+  name: cfssl-internal-ca
+spec:
+  authSecretName: "cfssl-internal-ca-key"
+  bundle: false
+  label: "default"
+  profile: "host"
+  url: "https://<YOUR multirootca server URL HERE!" # <- change HERE

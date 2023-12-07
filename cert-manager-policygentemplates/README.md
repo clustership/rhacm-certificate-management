@@ -14,6 +14,7 @@ cp source-crs/CfsslInternalCAKeySecret.yaml.example source-crs/CfsslInternalCAKe
 Then edit the file to put you own key
 
 ```bash
+---
 apiVersion: v1
 kind: Secret
 metadata:
@@ -22,6 +23,28 @@ metadata:
   namespace: cert-manager
 data:
   key: "<PUT your multirootca key here!!!>" # <- HERE
+```
+
+Change your ClusterIssuer configuration file to point to your own multirootca server:
+
+```bash
+cp source-crs/CertManagerClusterIssuer.yaml.example source-crs/CertManagerClusterIssuer.yaml
+```
+
+Then edit the file to put your own multirootca url
+
+```bash
+---
+apiVersion: cfssl-issuer.wikimedia.org/v1alpha1
+kind: ClusterIssuer
+metadata:
+  name: cfssl-internal-ca
+spec:
+  authSecretName: "cfssl-internal-ca-key"
+  bundle: false
+  label: "default"
+  profile: "host"
+  url: "https://<YOUR multirootca server URL HERE!" # <- change HERE
 ```
 
 # Test generated policies
