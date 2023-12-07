@@ -10,7 +10,7 @@ This is not a Red Hat supported solution. This document just provides an example
 
 ### Tools used
 
-This example is based on the certified cert-manager operator deployed in managed OpenShift clusters. But, for demo purpose, I use an unsupported cert-manager ClusterIssuer ([[https://github.com/wikimedia/operations-software-cfssl-issuer|cfssl-issuer]]) to generate certificate using multirootca ca server from cfssl project.
+This example is based on the certified cert-manager operator deployed in managed OpenShift clusters. But, for demo purpose, I use an unsupported cert-manager ClusterIssuer [cluster-issuer]([https://github.com/wikimedia/operations-software-cfssl-issuer) to generate certificate using multirootca ca server from cfssl project.
 
 Setting up multirootca is out of the scope of this project.
 
@@ -32,6 +32,6 @@ As CertificateRequest are distinguished based on a domain (or cn) attribute uniq
 this unique value for each managed cluster.
 
 
-See cert-manager-policygentemplates/ folder.
+See [cert-manager-policygentemplates/](cert-manager-policygentemplates/) folder.
 
 
