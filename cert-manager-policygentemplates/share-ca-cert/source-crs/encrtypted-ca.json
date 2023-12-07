@@ -1,0 +1,22 @@
+{
+  "kind": "SealedSecret",
+  "apiVersion": "bitnami.com/v1alpha1",
+  "metadata": {
+    "name": "cfssl-internal-ca-key",
+    "namespace": "cert-manager",
+    "creationTimestamp": null
+  },
+  "spec": {
+    "template": {
+      "metadata": {
+        "name": "cfssl-internal-ca-key",
+        "namespace": "cert-manager",
+        "creationTimestamp": null
+      },
+      "type": "Opaque"
+    },
+    "encryptedData": {
+      "key": "AgDGM7VxYcAYeDcKgojhA8vz0/N1wf2TFRLwYtLCjfTeaCzASRcWMalCBeZsAcMTySuueiaayLJuq9heWqHRdAK2asuP9KfD89jt9aYZM/Qf7nKJrZK6IG3c7Jl8P+NPkJu+yyO0S3ZgbGmUn2QhRcBjV3uaSRqNoN1tI/fqnY0Ntbpmh8+myj269M6PtfL/sUReDlq54yJ44gzgqAzQbJySxSmctUFwVxB8Cby8UoXiMuWjTMVb8/ghELVKzdnVkcqD8zZSvmi6+WQYCVK4kSJWVU2sOFlJl+D9bCNW1uyINvbh5p5zUhJzMiIy9O5Z6zLxAbQe4xxC+N5wwir/k3QMgDMROzC0ZI3RSASf0Yoms2Pbb24sH4XP9DK2D2+p2ZcywHC47lemnJFp5IDrTlD7fl6YagYTTILfi9xBEWFm6vjeixLmftvb8+6M8ToEc61VpbtrdUbjT2k6lewfgfplstMcng/2tRBtfk5p4c4aSTDrH5GvDl2cCAwgqZttWRn/ypoHedV2j/A9/JSW2av9bifBQxs1lNOfrZaYsJ4H5sglwwVJRqjJCbVcQtXYLVQ5HVt2T7lGc9sxogyfxpvtEun0IdWAoydam1ZaInM/dMQz9jZm6pmNULepOpSS5zwiyVc1n40dPGdBePqmwd8HZTJn3OENeeo6TOESm8k80JasqDM+R5RMDlQfjDfwnpwYyTVEPDVfBQWNlpIGw3UazNt+ZVT6ty+WJCRn9jHtpg=="
+    }
+  }
+}

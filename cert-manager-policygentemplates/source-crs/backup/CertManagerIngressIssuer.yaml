@@ -1,0 +1,19 @@
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: digitalocean-issuer-prod
+  namespace: openshift-ingress
+spec:
+  acme:
+    email: bob@example.com # put your email here
+    preferredChain: ""
+    privateKeySecretRef:
+      name: cert-manager-letsencrypt-tls-key
+    server: https://acme-v02.api.letsencrypt.org/directory
+    solvers:
+    - dns01:
+        cnameStrategy: Follow
+        digitalocean:
+          tokenSecretRef:
+            key: access-token
+            name: digitalocean-dns-token

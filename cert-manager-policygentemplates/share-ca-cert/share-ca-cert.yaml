@@ -1,0 +1,23 @@
+---
+apiVersion: ran.openshift.io/v1
+kind: PolicyGenTemplate
+metadata:
+  name: "share-ca-cert"
+  namespace: "share-ca-cert-policies"
+spec:
+  bindingRules:
+    # These policies will correspond to all clusters with this label:
+    local-cluster: "true"
+  spec:
+    namespaceselector:
+      exclude:
+      - kube-*
+      - openshift-*
+      include:
+      - sno-*
+      - mno-*
+  sourceFiles:
+    # Create operators policies that will be installed in all clusters
+    - fileName: CfsslInternalCAKeySecret.yaml
+      policyName: "ca-cert-policy"
+      remediationAction: inform

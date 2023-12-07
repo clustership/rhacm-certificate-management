@@ -1,0 +1,26 @@
+apiVersion: ran.openshift.io/v1alpha1
+kind: ClusterGroupUpgrade
+metadata:
+  name: sno-03-cert-manager-certificates
+  namespace: ztp-install
+spec:
+  actions:
+    afterCompletion:
+      addClusterLabels:
+        cert-manager-done: ""
+      deleteClusterLabels:
+        cert-manager-running: ""
+      deleteObjects: true
+    beforeEnable:
+      addClusterLabels:
+        cert-manager-running: ""
+  backup: false
+  clusters:
+  - sno-03
+  managedPolicies:
+  - cert-manager-config-policy
+  enable: true
+  preCaching: false
+  remediationStrategy:
+    maxConcurrency: 1
+    timeout: 240

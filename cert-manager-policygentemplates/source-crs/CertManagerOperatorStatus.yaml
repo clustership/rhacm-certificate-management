@@ -1,0 +1,28 @@
+apiVersion: operators.coreos.com/v1
+kind: Operator
+metadata:
+  annotations:
+    ran.openshift.io/ztp-deploy-wave: "2"
+  name: openshift-cert-manager-operator.cert-manager-operator
+status:
+  components:
+    refs:
+    - apiVersion: operators.coreos.com/v1alpha1
+      kind: ClusterServiceVersion
+      conditions:
+      - reason: InstallSucceeded
+        status: "True"
+        type: Succeeded
+      namespace: cert-manager-operator
+    - apiVersion: operators.coreos.com/v1alpha1
+      kind: InstallPlan
+      conditions:
+      - status: "True"
+        type: Installed
+      namespace: cert-manager-operator
+    - apiVersion: operators.coreos.com/v1alpha1
+      kind: Subscription
+      conditions:
+      - status: "False"
+        type: CatalogSourcesUnhealthy
+      namespace: cert-manager-operator

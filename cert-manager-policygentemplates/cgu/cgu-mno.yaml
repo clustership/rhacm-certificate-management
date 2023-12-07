@@ -1,0 +1,27 @@
+apiVersion: ran.openshift.io/v1alpha1
+kind: ClusterGroupUpgrade
+metadata:
+  name: mno-01
+  namespace: ztp-install
+spec:
+  actions:
+    afterCompletion:
+      addClusterLabels:
+        ztp-done: ""
+      deleteClusterLabels:
+        ztp-running: ""
+      deleteObjects: true
+    beforeEnable:
+      addClusterLabels:
+        ztp-running: ""
+  backup: false
+  clusters:
+  - mno-01
+  enable: true
+  managedPolicies:
+  - cert-manager-subscriptions-policy
+  - cert-manager-config-policy
+  preCaching: false
+  remediationStrategy:
+    maxConcurrency: 1
+    timeout: 240

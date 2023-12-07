@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: cert-manager
+  annotations:
+    workload.openshift.io/allowed: management
+    ran.openshift.io/ztp-deploy-wave: "20"
+    openshift.io/cluster-monitoring: "true"

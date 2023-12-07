@@ -1,0 +1,31 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  annotations:
+    ran.openshift.io/ztp-deploy-wave: "20"
+  name: apiserver-tls-cert
+  namespace: openshift-config
+spec:
+  secretName: apiserver-tls-cert
+  duration: 2160h # 90d
+  renewBefore: 360h # 15d
+  subject:
+    organizations:
+      - openshift
+  commonName: 'api.{{ (lookup "config.openshift.io/v1" "DNS"
+    "" "cluster").spec.baseDomain }}'
+  isCA: false
+  privateKey:
+    algorithm: RSA
+    encoding: PKCS1
+    size: 2048
+  usages:
+    - server auth
+  dnsNames:
+    - 'api.{{ (lookup "config.openshift.io/v1" "DNS" "" "cluster").spec.baseDomain }}'
+  uris:
+    - spiffe://cluster.local/ns/openshift-config/sa/api
+  issuerRef:
+    name: cfssl-internal-ca
+    kind: ClusterIssuer
+    group: cfssl-issuer.wikimedia.org
