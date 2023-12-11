@@ -1,0 +1,7 @@
+generators:
+- certificates-config.yaml
+- apiserver-patch.yaml
+
+resources:
+- ns.yaml
+

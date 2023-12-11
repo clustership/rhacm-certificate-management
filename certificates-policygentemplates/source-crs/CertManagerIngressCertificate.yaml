@@ -1,0 +1,18 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: openshift-wildcard
+  namespace: openshift-ingress
+spec:
+  commonName: '*.{{ (lookup "operator.openshift.io/v1" "IngressController"
+    "openshift-ingress-operator" "default").status.domain }}'
+  dnsNames:
+  - '*.{{ (lookup "operator.openshift.io/v1" "IngressController" "openshift-ingress-operator"
+    "default").status.domain }}'
+  duration: 2h
+  renewBefore: 1h
+  issuerRef:
+    kind: ClusterIssuer
+    group: cfssl-issuer.wikimedia.org
+    name: cfssl-internal-ca
+  secretName: openshift-wildcard-cert

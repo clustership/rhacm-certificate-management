@@ -1,0 +1,20 @@
+---
+apiVersion: ran.openshift.io/v1
+kind: PolicyGenTemplate
+metadata:
+  name: "cert-manager-op"
+  namespace: "cert-manager-policies"
+spec:
+  bindingRules:
+    # These policies will correspond to all clusters with this label:
+    cert-manager: "true"
+  sourceFiles:
+    # Create operators policies that will be installed in all clusters
+    - fileName: ./CertManagerSubscriptionNS.yaml
+      policyName: "subscriptions-policy"
+    - fileName: ./CertManagerSubscriptionOperGroup.yaml
+      policyName: "subscriptions-policy"
+    - fileName: ./CertManagerSubscription.yaml
+      policyName: "subscriptions-policy"
+    - fileName: ./CertManagerOperatorStatus.yaml
+      policyName: "subscriptions-policy"

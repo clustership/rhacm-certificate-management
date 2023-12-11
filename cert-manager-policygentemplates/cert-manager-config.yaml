@@ -1,0 +1,21 @@
+---
+apiVersion: ran.openshift.io/v1
+kind: PolicyGenTemplate
+metadata:
+  name: "cert-manager-config"
+  namespace: "cert-manager-policies"
+spec:
+  bindingRules:
+    # These policies will correspond to all clusters with this label:
+    cert-manager: "true"
+  sourceFiles:
+    - fileName: CertManagerNS.yaml
+      policyName: "config-policy"
+    - fileName: InternalCAChainConfigMap.yaml
+      policyName: "config-policy"
+    - fileName: CfsslInternalCAKeySecret.yaml
+      policyName: "config-policy"
+    - fileName: CertManagerCfsslClusterIssuer.yaml
+      policyName: "config-policy"
+    - fileName: CfsslIssuerDeploymentPatch.yaml
+      policyName: "config-policy"
