@@ -1,5 +1,7 @@
 generators:
-- cert-manager.yaml
+# - cert-manager.yaml
+- cert-manager-operator.yaml
+- cert-manager-config.yaml
 
 resources:
 - ns.yaml

@@ -28,7 +28,7 @@ data:
 Change your ClusterIssuer configuration file to point to your own multirootca server:
 
 ```bash
-cp source-crs/CertManagerClusterIssuer.yaml.example source-crs/CertManagerClusterIssuer.yaml
+cp source-crs/CertManagerCfsslClusterIssuer.yaml.example source-crs/CertManagerCfsslClusterIssuer.yaml
 ```
 
 Then edit the file to put your own multirootca url
